@@ -45,63 +45,51 @@ const noTransitionConfig = () => ({
 //     headerLeft: <Text onPress={() => navigation.navigate('DrawerOpen')}>Menu</Text>
 //   })
 // })
-const FeedStack = StackNavigator({
-  Feed: {
+const HomeStack = StackNavigator({
+  Home: {
     screen: Feed,
     navigationOptions: {
-      title: 'Feed 2'
+      title: 'HomeScreen'
     }
   },
-  Detail: {
-    screen: UserDetail,
-    navigationOptions: ({ navigation }) => ({
-      title: `${navigation.state.params.name.first.toUpperCase()} ${navigation.state.params.name.last.toUpperCase()}`
-    })
-  }
+  Details: { screen: UserDetail, navigationOptions: {tabBarVisible: false} }
 })
 
-const TabHome = TabNavigator({
-  Feed: {
-    screen: FeedStack,
-    navigationOptions: {
-      tabBarLabel: 'Feed',
-      tabBarIcon: ({ tintColor }) => <Icon name='list' size={35} color={tintColor} />
-    }
+const SettingsStack = StackNavigator({
+  Settings: { screen: FeedTwo },
+  Details: { screen: Screen1 }
+})
+
+const TabHome = TabNavigator(
+  {
+    Home: { screen: HomeStack },
+    Settings: { screen: SettingsStack }
   },
-  Me: {
-    screen: Me,
-    navigationOptions: {
-      tabBarLabel: 'Me',
-      tabBarIcon: ({ tintColor }) => <Icon name='account-circle' size={35} color={tintColor} />
-    }
-  }
-}, {
-  initialRouteName: 'Me',
-  navigationOptions: ({ navigation }) => ({
-    tabBarIcon: ({ focused, tintColor }) => {
-      const { routeName } = navigation.state
-      let iconName
-      if (routeName === 'Home') {
-        iconName = `ios-information-circle${focused ? '' : '-outline'}`
-      } else if (routeName === 'Settings') {
-        iconName = `ios-options${focused ? '' : '-outline'}`
+  {
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state
+        let iconName
+        if (routeName === 'Home') {
+          iconName = `ios-information-circle${focused ? '' : '-outline'}`
+        } else if (routeName === 'Settings') {
+          iconName = `ios-options${focused ? '' : '-outline'}`
+        }
+
+        // You can return any component that you like here! We usually use an
+        // icon component from react-native-vector-icons
+        return <Ionicons name={iconName} size={25} color={tintColor} />
       }
-
-      // You can return any component that you like here! We usually use an
-      // icon component from react-native-vector-icons
-      return <Ionicons name={iconName} size={25} color={tintColor} />
-    }
-  }),
-  tabBarOptions: {
-    activeTintColor: 'tomato',
-    inactiveTintColor: 'gray'
-  },
-  tabBarComponent: TabBarBottom,
-  tabBarPosition: 'bottom',
-  animationEnabled: false,
-  swipeEnabled: false
-}
-
+    }),
+    tabBarComponent: TabBarBottom,
+    tabBarPosition: 'bottom',
+    tabBarOptions: {
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray'
+    },
+    animationEnabled: false,
+    swipeEnabled: false
+  }
 )
 
 // const RootStack = StackNavigator({
@@ -121,7 +109,7 @@ const TabHome = TabNavigator({
 
 const DrawerStack = DrawerNavigator({
   home: { screen: TabHome },
-  screen2: { screen: FeedStack },
+  // screen2: { screen: FeedStack },
   screen3: { screen: Screen3 }
 }, {
   gesturesEnabled: false,
@@ -146,7 +134,7 @@ const PrimaryNav = StackNavigator({
   loginStack: { screen: LoginStack },
   drawerStack: { screen: DrawerStack }
 }, {
-  // Default config for all screens
+    // Default config for all screens
   headerMode: 'none',
   title: 'Main',
   initialRouteName: 'drawerStack',

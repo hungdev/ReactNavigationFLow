@@ -8,6 +8,14 @@ import { List, ListItem } from 'react-native-elements';
 import { users } from '../config/data';
 
 class Feed extends Component {
+  // static navigationOptions = ({ navigation }) => ({
+  //   title: 'heellloo',
+  //    headerTitleStyle : {textAlign: 'center',alignSelf:'center'},
+  //       headerStyle:{
+  //           backgroundColor:'white',
+  //       },
+  //   });
+
   onLearnMore = (user) => {
     // this.props.navigation.navigate('Details', { ...user });
     this.props.navigation.navigate('Details', { ...user });
